@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Autocomplete, TextField } from '@mui/material';
+import './App.css';
+import { SyntheticEvent, useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [inputValue, setInputValue] = useState<string>('');
+  const [selectedMatch, setSelectedMatch] = useState<string | undefined>(undefined);
+  const [matches] = useState(["AZ - Ajax", "PSV - Feyenoord"]);
+  // The fuck is wrong with this: https://github.com/mui/material-ui/issues/29943
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Autocomplete
+      disablePortal
+      freeSolo
+      inputValue={inputValue}
+      onInputChange={(_event: SyntheticEvent, value: string) => {
+          setInputValue(value)
+      }}
+      onChange={(_event: SyntheticEvent, value: string | null) => {
+        if (value) {
+          setSelectedMatch(value);
+        }
+      }}
+      options={matches}
+      sx={{ width: 300 }}
+      renderOption={(props: any, option: string) => {
+        return (<p {...props} key={option}>{option}<br/></p>);
+      }}
+      renderInput={(params) => <TextField {...params} label="Match" />}
+      />
+      <p>Selected match: {selectedMatch}</p>
     </>
   )
 }
 
-export default App
+export default App;
