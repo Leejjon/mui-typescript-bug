@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import './App.css';
 import { SyntheticEvent, useState } from 'react';
 
@@ -24,7 +24,7 @@ function App() {
       options={matches}
       sx={{ width: 300 }}
       renderOption={(props: any, option: string) => {
-        return (<p {...props} key={option}>{option}<br/></p>);
+        return (<Box {...props} key={option}>{option}<br/></Box>);
       }}
       renderInput={(params) => <TextField {...params} label="Match" />}
       />
